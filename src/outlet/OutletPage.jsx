@@ -5,9 +5,7 @@ import { Footer } from "flowbite-react";
 const OutletPage = () => {
   return (
     <>
-      <Navbar/>
       <Outlet />
-      <Footer />
     </>
   )
 }

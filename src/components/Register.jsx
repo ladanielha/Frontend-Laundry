@@ -11,31 +11,12 @@ import useChangeListener from "../libs/hooks/useChangeListener";
 import useValidator from "../libs/hooks/useValidator";
 import { BASE_URL } from "../libs/config/settings";
 
-const Login = () => {
-    const application = useContext(ContextApplication);
-    const jwt = useJWT();
-    const http = useHTTP();
-    const message = useMessage();
-    const changeListener = useChangeListener();
-  
-    const [user, setUser] = useState(UserInit);
-    const userValidator = useValidator(UserValidator);
-
-    const signIn = async (e) => {
-        e.preventDefault();
-        userValidator.reset();
-        try {
-          const url = `${BASE_URL}/admin/signin`;
-          const response = await http.publicHTTP.post(url, user);
-          jwt.set(response.data.token);
-          application.setIsAuthenticated(true);
-          console.log(response.data.token);
-        } catch (error) {
-            console.error(error)
-            message.error(error);
-            userValidator.except(error);
-        }
-      };
+const Register = () => {
+    const [username, setUserName] = useState ("")
+    const [email, setEmail] = useState ("")
+    const [password, setPassword] = useState ("")
+ 
+    console.log(username,email,password)
 
   return (
     <section className="h-full bg-[#F7EEDD] dark:bg-white-900">
@@ -54,14 +35,25 @@ const Login = () => {
             <form className="space-y-4 md:space-y-6" action="#">
               <div>
                 <label className="block mb-2 text-sm font-extrabold text-gray-900 dark:text-white">
+                  USERNAME
+                </label>
+                <input
+                  type="username"
+                  name="username"
+                  id="username"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 "
+                  placeholder="INPUT YOUR USERNAME"
+                  required=""
+                ></input>
+              </div>
+              <div>
+                <label className="block mb-2 text-sm font-extrabold text-gray-900 dark:text-white">
                   EMAIL
                 </label>
                 <input
                   type="email"
                   name="email"
                   id="email"
-                  value={user.email}
-                  onChange={e => changeListener.onChangeText(e, user, setUser)}
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 "
                   placeholder="INPUT YOUR EMAIL"
                   required=""
@@ -75,8 +67,8 @@ const Login = () => {
                   type="password"
                   name="password"
                   id="password"
-                  value={user.password}
-                    onChange={e => changeListener.onChangeText(e, user, setUser)}
+                //   value={user.password}
+                    // onChange={e => changeListener.onChangeText(e, user, setUser)}
                   placeholder="INPUT YOUR PASSWORD"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   required=""
@@ -84,12 +76,12 @@ const Login = () => {
               </div>
               <button
                 type="submit"
-                onClick={signIn}
+                // onClick={signIn}
                 className="w-full text-colorPicker-krem bg-colorPicker-biruBG hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-bold rounded-lg text-xl px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
               >
-                LOGIN
+                Register
               </button>
-              <p className="text-sm font-light text-gray-500 dark:text-gray-400">
+              {/* <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                 Don’t have an account yet?{" "}
                 <a
                   href="#"
@@ -97,7 +89,7 @@ const Login = () => {
                 >
                   Register
                 </a>
-              </p>
+              </p> */}
             </form>
           </div>
         </div>
@@ -106,4 +98,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

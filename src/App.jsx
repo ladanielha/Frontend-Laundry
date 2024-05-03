@@ -3,24 +3,37 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 // import Login from "../Login";
-import { Route, HashRouter, Routes } from "react-router-dom";
+import { Route, HashRouter, Routes, BrowserRouter, Outlet } from "react-router-dom";
 import OutletPage from "./outlet/OutletPage";
 import Login from "./components/Login";
 import ItemPage from "./pages/ItemPage";
 import LoginPage from "./pages/LoginPage";
+import TransactionPage from "./pages/TransactionPage";
+import { ContextApplication } from "./libs/config/contexts";
+import RegisterPage from "./pages/RegisterPage";
 
 
 function App() {
-  const [count, setCount] = useState(0);
+  
+  const [isAuthenticated , setIsAuthenticated] = useState(false)
+
 
   return (
-    <HashRouter>
+    <ContextApplication.Provider value={{isAuthenticated, setIsAuthenticated}}>
+    <BrowserRouter>
       <Routes>
-        <Route path="/" element={<LoginPage/>}>
-          <Route index={true} element={LoginPage}></Route>
+        <Route path="/" element={<OutletPage/>}>
+          <Route index={true} element={<LoginPage/>}></Route>
+        </Route>
+        <Route path="/register" element={<OutletPage/>}>
+          <Route index={true} element={<RegisterPage/>}></Route>
+        </Route>
+        <Route path="/transaction" element={<OutletPage/>}>
+          <Route index={true} element={<TransactionPage/>}></Route>
         </Route>
       </Routes>
-    </HashRouter>
+    </BrowserRouter>
+    </ContextApplication.Provider>
   );
 }
 
