@@ -105,7 +105,7 @@ const Navbar = () => {
                 href="#"
                 class="block py-2 px-3 text-colorPicker-krem rounded hover:bg-colorPicker-krem md:border-0 md:hover:text-black md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
               >
-                Services
+                Item
               </a>
             </li>
             <li>
@@ -113,7 +113,7 @@ const Navbar = () => {
                 href="#"
                 class="block py-2 px-3 text-colorPicker-krem rounded hover:bg-colorPicker-krem md:border-0 md:hover:text-black md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
               >
-                Pricing
+                Voucher
               </a>
             </li>
             <li>
@@ -121,7 +121,7 @@ const Navbar = () => {
                 href="#"
                 class="block py-2 px-3 text-colorPicker-krem rounded hover:bg-colorPicker-krem md:border-0 md:hover:text-black md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
               >
-                Contact
+                Customer
               </a>
               {/* <button type="button" class="focus:outline-none text-black bg-colorPicker-logout hover:bg-green-100 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Logout
                     </button> */}
