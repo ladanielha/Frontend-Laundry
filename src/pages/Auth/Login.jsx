@@ -6,6 +6,8 @@ import useChangeListener from "../../hooks/useChangeListener";
 import { AdminInit, AdminValidator } from "../../data/AdminData";
 import useValidator from "../../hooks/useValidator";
 import useMessage from "../../hooks/useMessage";
+import reactLogo from "../../assets/react.svg";
+
 
 const Login = () => {
   const application = useContext(ContextApplication);
@@ -43,7 +45,7 @@ const Login = () => {
           >
             <img
               className="w-8 h-8 mr-2"
-              src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg"
+              src={reactLogo}
               alt="logo"
             ></img>
             Flowbite
