@@ -113,16 +113,16 @@ const Navbar = () => {
                 href="#"
                 class="block py-2 px-3 text-colorPicker-krem rounded hover:bg-colorPicker-krem md:border-0 md:hover:text-black md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
               >
-                Voucher
+                Customer
               </a>
             </li>
             <li>
-              <a
-                href="#"
-                class="block py-2 px-3 text-colorPicker-krem rounded hover:bg-colorPicker-krem md:border-0 md:hover:text-black md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-              >
-                Customer
-              </a>
+            <button
+            type="submit"
+            className=" py-1 px-2 text-sm font-medium text-center text-gray-900 rounded-lg bg-[#ACE2E1] sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+          >
+            Logout
+          </button>
               {/* <button type="button" class="focus:outline-none text-black bg-colorPicker-logout hover:bg-green-100 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Logout
                     </button> */}
             </li>
