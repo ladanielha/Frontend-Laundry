@@ -1,14 +1,18 @@
-const Item = () => {
+import { useState } from "react";
+import GenerateId from "../utils/GenerateId";
+
+const Customer = () => {
+  const [customer, setCustomer] = useState("");
   return (
     <section className="bg-[#F7EEDD] dark:bg-gray-900">
       <div className="max-w-screen-md px-4 py-2 mx-auto lg:py-16 ">
         <h2 className="block mb-4 text-4xl font-extrabold tracking-tight text-center text-gray-900 dark:text-white">
-          Item
+          Customer
         </h2>
         <div className="divide-y-2 divide-black ">
           <div className="gap-5 my-5">
             <div className="block mb-5 text-lg font-medium text-gray-900 dark:text-gray-300">
-              Create Item
+              Create Customer
             </div>
             <div className="flex w-full gap-5 flex-direction-column">
               <div className="w-1/2">
@@ -17,13 +21,13 @@ const Item = () => {
                   htmlFor=""
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                 >
-                  Item Name
+                  Customer Name
                 </label>
                 <input
                   type=""
                   id="itemName"
                   className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light"
-                  placeholder="Input Item Name"
+                  placeholder="Input Customer Name"
                   required=""
                 />
               </div>
@@ -35,19 +39,7 @@ const Item = () => {
                 >
                   Created At
                 </label>
-                <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
-                  <svg
-                    className="w-4 h-4 text-gray-500 dark:text-gray-400"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
-                  </svg>
-                </div>
                 <input
-                
                   type="date"
                   className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light"
                   placeholder="Input Date"
@@ -56,21 +48,23 @@ const Item = () => {
               </div>
             </div>
             <div>
-              <div className="flex w-full gap-5 flex-direction-column">
+              <div className="flex w-full gap-5 pt-3 flex-direction-column">
                 <div className="w-1/2">
                   {" "}
                   <label
                     htmlFor=""
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                   >
-                    Price
+                    Code
                   </label>
                   <input
-                    type="number"
+                    type="string"
+                    value={GenerateId("CUS", 1)}
                     id=""
                     className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light"
-                    placeholder="Input Price"
+                    placeholder="Auto Generate"
                     required=""
+                    disabled
                   />
                 </div>
                 <div className="w-1/2">
@@ -79,10 +73,10 @@ const Item = () => {
                     htmlFor="email"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                   >
-                    Service Name
+                    Phone Number
                   </label>
                   <input
-                    type=""
+                    type="number"
                     id="service"
                     className="disabled shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light"
                     placeholder="Input Service Name"
@@ -109,7 +103,7 @@ const Item = () => {
 
           <div className="gap-5 py-5 my-5">
             <div className="block mb-5 text-lg font-medium text-gray-900 dark:text-gray-300">
-              Item Detail
+              Customer Detail
             </div>
             <div className="flex w-full gap-5 pb-5 flex-direction-column">
               <div className="w-1/2">
@@ -118,13 +112,13 @@ const Item = () => {
                   htmlFor="email"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                 >
-                  Item Name
+                  Customer Name
                 </label>
                 <input
                   type="email"
                   id="email"
                   className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light"
-                  placeholder="Input Item Name"
+                  placeholder="Input Customer Name"
                   required=""
                 />
               </div>
@@ -136,7 +130,7 @@ const Item = () => {
                 >
                   Page Limit
                 </label>
-                <form class="max-w-sm mx-auto">
+                <form className="max-w-sm mx-auto">
                   <select
                     id="countries"
                     className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light"
@@ -158,10 +152,10 @@ const Item = () => {
                   <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
                       <th scope="col" className="px-6 py-3 text-center">
-                        Item Number
+                        Customer Number
                       </th>
                       <th scope="col" className="px-6 py-3 text-center">
-                        Item Name
+                        Customer Name
                       </th>
                       <th scope="col" className="px-6 py-3 text-center">
                         Price
@@ -268,4 +262,4 @@ const Item = () => {
   );
 };
 
-export default Item;
+export default Customer;
