@@ -1,6 +1,40 @@
 import { FiSearch } from "react-icons/fi";
+import { BASE_URL } from "../libs/config/settings";
+import useHTTP from "../libs/hooks/useHTTP";
+import useJWT from "../libs/hooks/useJWT";
+import useMessage from "../libs/hooks/useMessage";
+import { useEffect, useState } from "react";
 export default function Transactions() {
-  const isShow = "";
+  const http = useHTTP();
+  const jwt = useJWT();
+  const message = useMessage();
+
+  const [daftarCustomer, setDaftarCustomer] = useState([]);
+  const onCustomerList = () => {
+    const url = `${BASE_URL}/customer`;
+
+    const config = {
+      headers: {
+        Authorization: jwt.get(),
+      },
+    };
+
+    http.privateHTTP
+      .get(url, config)
+      .then((response) => {
+        const { results } = response.results;
+        console.log(results);
+        setDaftarCustomer(response);
+      })
+      .catch((error) => {
+        message.error(error);
+      });
+  };
+
+  useEffect(() => {
+    onCustomerList();
+  }, []);
+
   return (
     <section className="bg-[#F7EEDD] dark:bg-gray-900">
       <div className="max-w-screen-md px-4 py-2 mx-auto lg:py-16 ">
@@ -29,17 +63,16 @@ export default function Transactions() {
                     type="text"
                     id="input-group-1"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="name@flowbite.com"
+                    placeholder="Search Name Customer"
                   />
                 </div>
-                {isShow != "" ? (
+                {daftarCustomer != "" ? (
                   <div className="bg-gray-50 border divide-y-1 divide-black border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                    <div className="bg-gray-50   text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                      Bambang - 081234564
-                    </div>
-                    <div className="bg-gray-50  text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                      Bambang - 081234564
-                    </div>
+                    {daftarCustomer.map((customer) => (
+                      <div className="bg-gray-50   text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        {customer.name}
+                      </div>
+                    ))}
                   </div>
                 ) : null}
               </div>
@@ -54,9 +87,10 @@ export default function Transactions() {
                 <input
                   type="email"
                   id="email"
-                  className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light"
+                  className="shadow-sm  bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light"
                   placeholder="Input Phone Number"
                   required=""
+                  disabled
                 />
               </div>
             </div>
@@ -83,7 +117,7 @@ export default function Transactions() {
                   {/* Modal header */}
                   <div className="flex items-center justify-between p-4 border-b rounded-t md:p-5 dark:border-gray-600">
                     <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                      Create New Product
+                      Create Customer
                     </h3>
                     <button
                       type="button"
@@ -123,7 +157,7 @@ export default function Transactions() {
                           name="name"
                           id="name"
                           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                          placeholder="Type product name"
+                          placeholder="Input Name Customer"
                           required=""
                         />
                       </div>
@@ -132,18 +166,18 @@ export default function Transactions() {
                           htmlFor="price"
                           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                         >
-                          Price
+                          No Phone
                         </label>
                         <input
-                          type="number"
-                          name="price"
-                          id="price"
+                          type="string"
+                          name="phoneNumber"
+                          id="phoneNumber"
                           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                          placeholder="$2999"
+                          placeholder="Input No Handphone"
                           required=""
                         />
                       </div>
-                      <div className="col-span-2 sm:col-span-1">
+                      {/* <div className="col-span-2 sm:col-span-1">
                         <label
                           htmlFor="category"
                           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -175,7 +209,7 @@ export default function Transactions() {
                           placeholder="Write product description here"
                           defaultValue={""}
                         />
-                      </div>
+                      </div> */}
                     </div>
                     <button
                       type="submit"
@@ -193,7 +227,7 @@ export default function Transactions() {
                           clipRule="evenodd"
                         />
                       </svg>
-                      Add new product
+                      Add Customer
                     </button>
                   </form>
                 </div>
@@ -279,6 +313,71 @@ export default function Transactions() {
             >
               Calculate
             </button>
+          </div>
+        </div>
+        <div className="gap-5 py-5 my-5 bg-[#ACE2E1] rounded-lg pl-2">
+          <div className="block mb-5 text-lg font-medium text-gray-900 dark:text-gray-300">
+            Summary
+          </div>
+          <div className="flex w-full gap-5 pb-5 flex-direction-row">
+            <div className="w-1/2">
+              {" "}
+              <label
+                htmlFor="email"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+              >
+                Customer Name
+              </label>
+            </div>
+            <div className="w-1/2">
+              {" "}
+              <label
+                htmlFor="email"
+                className="block mb-2 text-sm text-gray-900 dark:text-gray-300"
+              >
+                Budi
+              </label>
+            </div>
+          </div>
+          <div className="flex w-full gap-5 pb-5 flex-direction-row">
+            <div className="w-1/2">
+              {" "}
+              <label
+                htmlFor="email"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+              >
+                Item Name
+              </label>
+            </div>
+            <div className="w-1/2">
+              {" "}
+              <label
+                htmlFor="email"
+                className="block mb-2 text-sm text-gray-900 dark:text-gray-300"
+              >
+                Cuci Kiloean
+              </label>
+            </div>
+          </div>
+          <div className="flex w-full gap-5 pb-5 flex-direction-row">
+            <div className="w-1/2">
+              {" "}
+              <label
+                htmlFor="email"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+              >
+                Total Price
+              </label>
+            </div>
+            <div className="w-1/2">
+              {" "}
+              <label
+                htmlFor="email"
+                className="block mb-2 text-sm text-gray-900 dark:text-gray-300"
+              >
+                Rp. 500.000,-
+              </label>
+            </div>
           </div>
         </div>
         <div className="flex items-center justify-center w-full gap-5">
