@@ -3,37 +3,79 @@ import { BASE_URL } from "../libs/config/settings";
 import useHTTP from "../libs/hooks/useHTTP";
 import useJWT from "../libs/hooks/useJWT";
 import useMessage from "../libs/hooks/useMessage";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { PaginationData } from "../data/PaginationsData";
+import { axiosInstance } from "../libs/config/config";
 export default function Transactions() {
-  const http = useHTTP();
   const jwt = useJWT();
-  const message = useMessage();
-
+  const [searchTerm, setSearchTerm] = useState("");
+  const [onName, setOnName] = useState("");
+  const [onPhone, setOnPhone] = useState("");
+  const [onNameItem, setNameItem] = useState("");
+  const [onService, setOnService] = useState("");
+  const [onPrice, setOnPrice] = useState("");
   const [daftarCustomer, setDaftarCustomer] = useState([]);
-  const onCustomerList = () => {
-    const url = `${BASE_URL}/customer`;
-
-    const config = {
-      headers: {
-        Authorization: jwt.get(),
-      },
-    };
-
-    http.privateHTTP
-      .get(url, config)
-      .then((response) => {
-        const { results } = response.results;
-        console.log(results);
-        setDaftarCustomer(response);
+  const [daftarItem, setDaftarItem] = useState([]);
+  const [searchCustomer, setSearchCustomer] = useState([]);
+  const onCustomerList = async () => {
+    await axiosInstance
+      .get("/customer", {
+        headers: {
+          Authorization: jwt.get(),
+        },
+      })
+      .then((res) => {
+        setDaftarCustomer(res.data.results);
       })
       .catch((error) => {
-        message.error(error);
+        console.log(`apa error catch ? ${error}`);
       });
+  };
+
+  const onItemList = async () => {
+    await axiosInstance
+      .get("/item", {
+        headers: {
+          Authorization: jwt.get(),
+        },
+      })
+      .then((res) => {
+        setDaftarItem(res.data.results);
+      })
+      .catch((error) => {
+        console.log(`apa error catch ? ${error}`);
+      });
+  };
+  const onSearch = (name) => {
+    const cleanName = name.replace(/\s+/g, ""); // Hapus semua spasi
+    const filteredCustomers = daftarCustomer.filter((customer) =>
+      customer.name
+        .replace(/\s+/g, "")
+        .toLowerCase()
+        .includes(cleanName.toLowerCase())
+    );
+    setSearchCustomer(filteredCustomers); // Perbarui state dengan hasil filter
+  };
+
+  const handleCustomerClick = (customer) => {
+    setOnName(customer.name); // Perbarui nilai input dengan nama yang diklik
+    setOnPhone(customer.phonenumber); // Bersihkan hasil pencarian setelah dipilih
+  };
+
+  const handleItemClick = (item) => {
+    setNameItem(item.name); // Perbarui nilai input dengan nama yang diklik
+    setOnService(item.service); // Bersihkan hasil pencarian setelah dipilih
+    setOnPrice(item.price);
   };
 
   useEffect(() => {
     onCustomerList();
+    onItemList();
   }, []);
+
+  useEffect(() => {
+    onSearch(searchTerm); // Panggil setiap kali searchTerm berubah
+  }, [searchTerm]); // Bergantung pada searchTerm
 
   return (
     <section className="bg-[#F7EEDD] dark:bg-gray-900">
@@ -62,15 +104,21 @@ export default function Transactions() {
                   <input
                     type="text"
                     id="input-group-1"
+                    value={onName}
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Search Name Customer"
+                    onChange={(e) => setSearchTerm(e.target.value)}
                   />
                 </div>
-                {daftarCustomer != "" ? (
-                  <div className="bg-gray-50 border divide-y-1 divide-black border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                    {daftarCustomer.map((customer) => (
-                      <div className="bg-gray-50   text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        {customer.name}
+                {searchCustomer.length > 0 ? (
+                  <div className="bg-gray-50 border divide-y-1  divide-black border-gray-300 text-gray-900 text-sm rounded-lg p-2.5 overflow-y-auto h-13 ">
+                    {searchCustomer.map((customer) => (
+                      <div
+                        key={customer.id}
+                        className="py-2 hover:bg-[#ACE2E1] px-2 rounded-lg"
+                        onClick={() => handleCustomerClick(customer)}
+                      >
+                        {customer.name} - {customer.phonenumber}
                       </div>
                     ))}
                   </div>
@@ -85,9 +133,10 @@ export default function Transactions() {
                   Phone Number
                 </label>
                 <input
-                  type="email"
-                  id="email"
-                  className="shadow-sm  bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light"
+                  type="text"
+                  value={onPhone}
+                  id="phonenumber"
+                  className="shadow-sm  bg-[#ACE2E1]  border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light"
                   placeholder="Input Phone Number"
                   required=""
                   disabled
@@ -248,33 +297,36 @@ export default function Transactions() {
                 >
                   Item Name
                 </label>
-                <input
-                  type="email"
-                  id="email"
-                  className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light"
-                  placeholder="Input Item Name"
-                  required=""
-                />
-              </div>
-              <div className="w-1/2">
-                {" "}
-                <label
-                  htmlFor="email"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                >
-                  Service Name
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light"
-                  placeholder="Input Service Name"
-                  required=""
-                />
+                <div className="relative ">
+                  <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                    <FiSearch />
+                  </div>
+                  <input
+                    type="text"
+                    id="input-group-1"
+                    value={onNameItem}
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Search Name Customer"
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                  />
+                </div>
+                {daftarItem.length > 0 ? (
+                  <div className="bg-gray-50 border divide-y-1  divide-black border-gray-300 text-gray-900 text-sm rounded-lg p-2.5 overflow-y-auto h-13 ">
+                    {daftarItem.map((item) => (
+                      <div
+                        key={item.id}
+                        className="py-2 hover:bg-[#ACE2E1] px-2 rounded-lg"
+                        onClick={() => handleItemClick(item)}
+                      >
+                        {item.name} - {item.service} - {item.price}
+                      </div>
+                    ))}
+                  </div>
+                ) : null}
               </div>
             </div>
             <div className="flex w-full gap-5 flex-direction-column">
-              <div className="w-1/2">
+              {/* <div className="w-1/2">
                 {" "}
                 <label
                   htmlFor="email"
@@ -289,6 +341,24 @@ export default function Transactions() {
                   placeholder="Input Quantity"
                   required=""
                 />
+              </div> */}
+              <div className="w-1/2">
+                {" "}
+                <label
+                  htmlFor="email"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                >
+                  Service Name
+                </label>
+                <input
+                  type="text"
+                  id="service"
+                  disabled
+                  value={onService}
+                  className="shadow-sm bg-[#ACE2E1]  border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light"
+                  placeholder="Input Service Name"
+                  required=""
+                />
               </div>
               <div className="w-1/2">
                 {" "}
@@ -299,20 +369,22 @@ export default function Transactions() {
                   Price
                 </label>
                 <input
-                  type="email"
-                  id="email"
-                  className="disabled shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light"
+                  type="text"
+                  id="price"
+                  disabled
+                  value={onPrice}
+                  className="disabled shadow-sm bg-[#ACE2E1] border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light"
                   placeholder="Input Price"
                   required=""
                 />
               </div>
             </div>
-            <button
+            {/* <button
               type="submit"
               className="my-3 py-3 px-5 text-sm font-medium text-center text-gray-900 rounded-lg bg-[#41C9E2] sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
             >
               Calculate
-            </button>
+            </button> */}
           </div>
         </div>
         <div className="gap-5 py-5 my-5 bg-[#ACE2E1] rounded-lg pl-2">
@@ -335,7 +407,7 @@ export default function Transactions() {
                 htmlFor="email"
                 className="block mb-2 text-sm text-gray-900 dark:text-gray-300"
               >
-                Budi
+                {onName}
               </label>
             </div>
           </div>
@@ -355,7 +427,7 @@ export default function Transactions() {
                 htmlFor="email"
                 className="block mb-2 text-sm text-gray-900 dark:text-gray-300"
               >
-                Cuci Kiloean
+                {onNameItem}
               </label>
             </div>
           </div>
@@ -375,7 +447,7 @@ export default function Transactions() {
                 htmlFor="email"
                 className="block mb-2 text-sm text-gray-900 dark:text-gray-300"
               >
-                Rp. 500.000,-
+                Rp. {onPrice},-
               </label>
             </div>
           </div>
