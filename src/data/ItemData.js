@@ -1,7 +1,6 @@
 export const ItemInit = {
     nomor: "",
-    nama: "",
-    satuan: "",
-    hargaJual: 0,
-    stok: 0, 
+    name: "",
+    price: 0,
+    service: "",
   }
