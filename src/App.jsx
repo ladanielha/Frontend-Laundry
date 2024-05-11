@@ -27,6 +27,9 @@ function App() {
         <Route path="/transaction" element={<OutletPage/>}>
           <Route index={true} element={<TransactionPage/>}></Route>
         </Route>
+        <Route path="/item" element={<OutletPage/>}>
+          <Route index={true} element={<ItemPage/>}></Route>
+        </Route>
       </Routes>
     </BrowserRouter>
     </ContextApplication.Provider>
