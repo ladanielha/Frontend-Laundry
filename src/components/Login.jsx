@@ -1,4 +1,4 @@
-import logo from "../assets/logo.png";
+import logo from "../assets/logowhite.png";
 // import logojson from "../assets/logo.json"
 import { useContext, useMemo, useState } from "react";
 
@@ -10,32 +10,44 @@ import useMessage from "../libs/hooks/useMessage";
 import useChangeListener from "../libs/hooks/useChangeListener";
 import useValidator from "../libs/hooks/useValidator";
 import { BASE_URL } from "../libs/config/settings";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const Login = () => {
-    const application = useContext(ContextApplication);
-    const jwt = useJWT();
-    const http = useHTTP();
-    const message = useMessage();
-    const changeListener = useChangeListener();
-  
-    const [user, setUser] = useState(UserInit);
-    const userValidator = useValidator(UserValidator);
+  const application = useContext(ContextApplication);
+  const jwt = useJWT();
+  const http = useHTTP();
+  const message = useMessage();
+  const changeListener = useChangeListener();
+  const navigate = useNavigate();
+  const isShow = false
 
-    const signIn = async (e) => {
-        e.preventDefault();
-        userValidator.reset();
-        try {
-          const url = `${BASE_URL}/admin/signin`;
-          const response = await http.publicHTTP.post(url, user);
-          jwt.set(response.data.token);
-          application.setIsAuthenticated(true);
-          console.log(response.data.token);
-        } catch (error) {
-            console.error(error)
-            message.error(error);
-            userValidator.except(error);
-        }
-      };
+  const [user, setUser] = useState(UserInit);
+  const userValidator = useValidator(UserValidator);
+
+  const signIn = async (e) => {
+    e.preventDefault();
+    userValidator.reset();
+    try {
+      const url = `${BASE_URL}/admin/signin`;
+      const response = await http.publicHTTP.post(url, user);
+      jwt.set(response.data.token);
+      application.setIsAuthenticated(true);
+      navigate(`/transaction`, { replace: true });
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Succes Login",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      console.log(response.data.token);
+    } catch (error) {
+      console.error(error);
+      message.error(error);
+      userValidator.except(error);
+    }
+  };
 
   return (
     <section className="h-full bg-[#F7EEDD] dark:bg-white-900">
@@ -44,11 +56,11 @@ const Login = () => {
           href="#"
           className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
         >
-          <img className="w-8 h-8 mr-2" src={logo} alt="logo"></img>
+          <img className=" h-15 w-15" src={logo} alt="logo"></img>
         </a>
-        <div className="w-full bg-colorPicker-krem rounded-lg md:mt-0 sm:max-w-md xl:p-0">
+        <div className="w-full rounded-lg bg-colorPicker-krem md:mt-0 sm:max-w-md xl:p-0">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-            <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white text-center">
+            <h1 className="text-xl font-bold leading-tight tracking-tight text-center text-gray-900 md:text-2xl dark:text-white">
               WELCOME TO KUCEKAN JUARA
             </h1>
             <form className="space-y-4 md:space-y-6" action="#">
@@ -61,7 +73,9 @@ const Login = () => {
                   name="email"
                   id="email"
                   value={user.email}
-                  onChange={e => changeListener.onChangeText(e, user, setUser)}
+                  onChange={(e) =>
+                    changeListener.onChangeText(e, user, setUser)
+                  }
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 "
                   placeholder="INPUT YOUR EMAIL"
                   required=""
@@ -76,7 +90,9 @@ const Login = () => {
                   name="password"
                   id="password"
                   value={user.password}
-                    onChange={e => changeListener.onChangeText(e, user, setUser)}
+                  onChange={(e) =>
+                    changeListener.onChangeText(e, user, setUser)
+                  }
                   placeholder="INPUT YOUR PASSWORD"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   required=""
@@ -92,7 +108,7 @@ const Login = () => {
               <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                 Don’t have an account yet?{" "}
                 <a
-                  href="#"
+                  href="/register"
                   className="font-medium text-primary-600 hover:underline dark:text-primary-500"
                 >
                   Register
