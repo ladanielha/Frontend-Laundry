@@ -7,13 +7,13 @@ import {
   Outlet,
 } from "react-router-dom";
 import OutletPage from "./outlet/OutletPage";
-import Login from "./components/Login";
 import ItemPage from "./pages/ItemPage";
 import LoginPage from "./pages/LoginPage";
 import TransactionPage from "./pages/TransactionPage";
 import { ContextApplication } from "./libs/config/contexts";
 import RegisterPage from "./pages/RegisterPage";
 import CustomerPage from "./pages/CustomerPage";
+import { useState } from "react";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
