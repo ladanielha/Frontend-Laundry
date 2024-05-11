@@ -1,6 +1,6 @@
 export const CustomerInit = {
-    nomor: "",
-    nama: "",
-    alamat: "",
-    telepon: 0,
-  }
+    // code:"",
+    name: "",
+    phonenumber: "",
+    address: 0,
+}
