@@ -1,5 +1,5 @@
 export const CustomerInit = {
-    // code:"",
+    code:"",
     name: "",
     phonenumber: "",
 }

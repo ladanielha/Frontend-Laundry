@@ -14,6 +14,9 @@ import { ContextApplication } from "./libs/config/contexts";
 import RegisterPage from "./pages/RegisterPage";
 import CustomerPage from "./pages/CustomerPage";
 import { useState } from "react";
+import ItemUpdatePage from "./pages/ItemUpdatePage";
+import CustomerUpdatePage from "./pages/CustomerUpdatePage";
+
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -35,9 +38,11 @@ function App() {
           </Route>
           <Route path="/item" element={<OutletPage />}>
             <Route index={true} element={<ItemPage />}></Route>
+            <Route path={"detail"} element={<ItemUpdatePage/>}></Route>
           </Route>
           <Route path="/customer" element={<OutletPage />}>
             <Route index={true} element={<CustomerPage />}></Route>
+            <Route path={"detail"} element={<CustomerUpdatePage/>}></Route>
           </Route>
         </Routes>
       </BrowserRouter>

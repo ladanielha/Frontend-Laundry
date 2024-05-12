@@ -1,5 +1,5 @@
 export const ItemInit = {
-    nomor: "",
+    code: "",
     name: "",
     price: 0,
     service: "",

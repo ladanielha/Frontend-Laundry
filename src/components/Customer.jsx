@@ -44,7 +44,7 @@ const Customer = () => {
       });
   };
 
-  const onCustomerList = (page, search, limit = 5) => {
+  const onCustomerList = (page, search, limit = 2) => {
     const url = `${BASE_URL}/customer/`;
     const params = { page, limit, search };
     const config = {
@@ -66,6 +66,26 @@ const Customer = () => {
         message.error(error);
       });
   };
+
+  const onCustomerDelete = (_id) => {
+    message.confirmRemove(() => {
+      const url = `${BASE_URL}/customer/${_id}`;
+      const config = {
+        headers: {
+          Authorization: jwt.get()
+        }
+      };
+
+      axios.delete(url, config)
+        .then((response) => {
+          message.success(response)
+          navigate(-1);
+        })
+        .catch((error) => {
+          message.error(error);
+        })
+    })
+  }
 
   const onCustomerPaginate = (page) => {
     onCustomerList(page);
@@ -241,20 +261,19 @@ const Customer = () => {
                           }
                         </td>
                         <td className="px-6 py-4 text-center">
-                          <a
-                            href="#"
-                            className="font-medium text-colorPicker-biruBG hover:underline"
-                          >
-                            Edit
-                          </a>
+                          <button 
+                              onClick={()=>navigate("detail",{state: {_id: customer._id}})}
+                              type='button'
+                              className = "py-1 px-3 text-sm font-normal text-center text-gray-900 rounded-lg bg-colorPicker-submit sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                              >
+                                    Edit
+                          </button>
                         </td>
                         <td className="px-6 py-4 text-center">
-                          <a
-                            href="#"
-                            className="font-medium text-red-600 hover:underline"
-                          >
-                            Delete
-                          </a>
+                          <button className='py-1 px-2 text-sm font-normal text-center text-gray-900 rounded-lg bg-red-600 sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800'
+                                  onClick={() => onCustomerDelete(customer._id)}>
+                                    Delete
+                          </button>
                         </td>
                       </tr>
                     ))}
