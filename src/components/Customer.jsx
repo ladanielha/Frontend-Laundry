@@ -11,6 +11,10 @@ import useMessage from "../libs/hooks/useMessage";
 import { axiosInstance } from "../libs/config/config";
 import { CustomerInit } from "../data/CustomerData";
 import axios from "axios";
+import { FaCheck } from "react-icons/fa";
+import { IoIosCloseCircle } from "react-icons/io";
+import { HiOutlinePencilAlt } from "react-icons/hi";
+import { IoTrashBin } from "react-icons/io5";
 import Search from "./widgets/Search";
 // import GenerateId from "../utils/GenerateId";
 
@@ -163,14 +167,16 @@ const Customer = () => {
               <button
                 onClick={onCreateCustomer}
                 type="submit"
-                className=" py-3 px-5 text-sm font-medium text-center text-gray-900 rounded-lg bg-[#41C9E2] sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                className=" hover:text-white hover:bg-green-500 gap-2 flex items-center py-3 px-5 text-sm font-medium text-center text-gray-900 rounded-lg bg-[#41C9E2] sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
               >
+                <FaCheck />
                 Submit
               </button>
               <button
                 onClick={() => navigate(-1)}
-                className=" py-3 px-5 text-sm font-medium text-center text-gray-900 rounded-lg bg-[#ACE2E1] sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                className=" hover:text-white hover:bg-red-500 flex items-center gap-2 py-3 px-5 text-sm font-medium text-center text-gray-900 rounded-lg bg-[#ACE2E1] sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
               >
+                <IoIosCloseCircle/>
                 Cancel
               </button>
             </div>
@@ -211,9 +217,6 @@ const Customer = () => {
                       <th scope="col" className="px-5 py-3 text-center">
                         Created At
                       </th>
-                      <th scope="col" className="px-5 py-3 text-center">
-                        Modified At
-                      </th>
                       <th scope="col" className="px-6 py-3 text-center">
                         Edit
                       </th>
@@ -247,13 +250,6 @@ const Customer = () => {
                               .split("T")[0]
                           }
                         </td>
-                        <td className="px-3 py-4 text-center">
-                          {
-                            new Date(customer.updatedAt)
-                              .toISOString()
-                              .split("T")[0]
-                          }
-                        </td>
                         <td className="px-6 py-4 text-center">
                           <button
                             onClick={() =>
@@ -262,17 +258,15 @@ const Customer = () => {
                               })
                             }
                             type="button"
-                            className="py-1 px-3 text-sm font-normal text-center text-gray-900 rounded-lg bg-colorPicker-submit sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                            className="rounded-full p-2 text-sm font-normal text-center text-gray-900 rounded-lg hover:bg-yellow-300 sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
                           >
-                            Edit
+                            <HiOutlinePencilAlt className='w-5 h-5 rounded-full'/>
                           </button>
                         </td>
                         <td className="px-6 py-4 text-center">
-                          <button
-                            className="py-1 px-2 text-sm font-normal text-center text-gray-900 rounded-lg bg-red-600 sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-                            onClick={() => onCustomerDelete(customer._id)}
-                          >
-                            Delete
+                          <button className='rounded-full p-2 text-sm font-normal text-center text-gray-900 rounded-lg sm:w-fit hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800'
+                                  onClick={() => onCustomerDelete(customer._id)}>
+                                    <IoTrashBin className=' w-5 h-5 rounded-full'/>
                           </button>
                         </td>
                       </tr>
