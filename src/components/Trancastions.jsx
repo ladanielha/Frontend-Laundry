@@ -19,13 +19,14 @@ import useChangeListener from "../libs/hooks/useChangeListener";
 import { IoIosCloseCircle } from "react-icons/io";
 import { FaCheck } from "react-icons/fa";
 import { TbReload } from "react-icons/tb";
+import Search from "./widgets/Search";
 export default function Transactions() {
   const jwt = useJWT();
   const [searchTerm, setSearchTerm] = useState("");
   const [searchTermItem, setSearchTermItem] = useState("");
   const [searchItem, setSearchItem] = useState([]);
-  const [item, setItem] = useState(ItemInit);
-  const [customer, setCustomer] = useState(CustomerInit);
+  const [items, setItem] = useState(ItemInit);
+  const [customers, setCustomer] = useState(CustomerInit);
   const [admin, setAdmin] = useState(AdminInit);
   const [transaction, setTransaction] = useState(TransactionInit);
   const [onName, setOnName] = useState("");
@@ -149,8 +150,8 @@ export default function Transactions() {
 
     const payload = {
       ...transaction,
-      customer,
-      item,
+      customers,
+      items,
       admin,
     };
 
@@ -319,7 +320,7 @@ export default function Transactions() {
                   </button>
                 </div>
                 {searchCustomer.length > 0 ? (
-                  <div className="bg-gray-50 border divide-y-1  divide-black border-gray-300 text-gray-900 text-sm rounded-lg p-2.5 overflow-y-auto h-13 ">
+                  <div className="bg-gray-50 border divide-y-1  divide-black border-gray-300 text-gray-900 text-sm rounded-lg p-2.5 overflow-y-auto h-[120px] ">
                     {searchCustomer.map((customer) => (
                       <div
                         key={customer.id}
@@ -648,13 +649,7 @@ export default function Transactions() {
               >
                 Transaction Name
               </label>
-              <input
-                type="email"
-                id="email"
-                className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light"
-                placeholder="Input Transaction Name"
-                required=""
-              />
+            <Search callback={onTransactionSearch}/>
             </div>
             <div className="w-1/2">
               <PageLimit callback={onTransactionLimit} />

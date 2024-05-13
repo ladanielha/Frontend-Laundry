@@ -11,6 +11,7 @@ import useMessage from "../libs/hooks/useMessage";
 import { axiosInstance } from "../libs/config/config";
 import { CustomerInit } from "../data/CustomerData";
 import axios from "axios";
+import Search from "./widgets/Search";
 // import GenerateId from "../utils/GenerateId";
 
 const Customer = () => {
@@ -36,7 +37,7 @@ const Customer = () => {
       .post(url, customer, config)
       .then((response) => {
         message.success(response);
-        navigate('/customer');
+        navigate("/customer");
       })
       .catch((error) => {
         console.log(`apa error catch ? ${error}`);
@@ -72,20 +73,21 @@ const Customer = () => {
       const url = `${BASE_URL}/customer/${_id}`;
       const config = {
         headers: {
-          Authorization: jwt.get()
-        }
+          Authorization: jwt.get(),
+        },
       };
 
-      axios.delete(url, config)
+      axios
+        .delete(url, config)
         .then((response) => {
-          message.success(response)
+          message.success(response);
           navigate(-1);
         })
         .catch((error) => {
           message.error(error);
-        })
-    })
-  }
+        });
+    });
+  };
 
   const onCustomerPaginate = (page) => {
     onCustomerList(page);
@@ -180,20 +182,12 @@ const Customer = () => {
             </div>
             <div className="flex w-full gap-5 pb-5 flex-direction-column">
               <div className="w-1/2">
-                {" "}
                 <label
-                  htmlFor="email"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                 >
-                  Customer Name
+                  Search Customer
                 </label>
-                <input
-                  type="email"
-                  id="email"
-                  className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light"
-                  placeholder="Input Customer Name"
-                  required=""
-                />
+                <Search callback={onCustomerSearch} />
               </div>
               <div className="w-1/2">
                 <PageLimit callback={onCustomerLimit} />
@@ -261,18 +255,24 @@ const Customer = () => {
                           }
                         </td>
                         <td className="px-6 py-4 text-center">
-                          <button 
-                              onClick={()=>navigate("detail",{state: {_id: customer._id}})}
-                              type='button'
-                              className = "py-1 px-3 text-sm font-normal text-center text-gray-900 rounded-lg bg-colorPicker-submit sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-                              >
-                                    Edit
+                          <button
+                            onClick={() =>
+                              navigate("detail", {
+                                state: { _id: customer._id },
+                              })
+                            }
+                            type="button"
+                            className="py-1 px-3 text-sm font-normal text-center text-gray-900 rounded-lg bg-colorPicker-submit sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                          >
+                            Edit
                           </button>
                         </td>
                         <td className="px-6 py-4 text-center">
-                          <button className='py-1 px-2 text-sm font-normal text-center text-gray-900 rounded-lg bg-red-600 sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800'
-                                  onClick={() => onCustomerDelete(customer._id)}>
-                                    Delete
+                          <button
+                            className="py-1 px-2 text-sm font-normal text-center text-gray-900 rounded-lg bg-red-600 sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                            onClick={() => onCustomerDelete(customer._id)}
+                          >
+                            Delete
                           </button>
                         </td>
                       </tr>
