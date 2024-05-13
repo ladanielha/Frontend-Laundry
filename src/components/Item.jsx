@@ -11,6 +11,10 @@ import useChangeListener from '../libs/hooks/useChangeListener';
 import useMessage from '../libs/hooks/useMessage';
 import { ItemInit } from '../data/ItemData';
 import axios from 'axios';
+import { FaCheck } from "react-icons/fa";
+import { IoIosCloseCircle } from "react-icons/io";
+import { HiOutlinePencilAlt } from "react-icons/hi";
+import { IoTrashBin } from "react-icons/io5";
 
 
 const Item = () => {
@@ -42,6 +46,13 @@ const Item = () => {
       message.error(error)
     })
   }
+
+  const formatCurrency = (data) => {
+    return new Intl.NumberFormat("id-ID", {
+      style: "currency",
+      currency: "IDR",
+    }).format(data);
+  };
 
   const onItemList = (page, search, limit=2) => {
     
@@ -162,7 +173,6 @@ const Item = () => {
                 </label>
                 <input
                   name='price'
-                  value={item.price}
                   onChange={(e) => onChangeListener.onChangeNumber(e,item,setItem)}
                   className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light"
                   placeholder="Input Price"
@@ -192,14 +202,16 @@ const Item = () => {
           <button
             onClick={onCreateItem}
             type="submit"
-            className=" py-3 px-5 text-sm font-medium text-center text-gray-900 rounded-lg bg-[#41C9E2] sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+            className=" hover:text-white hover:bg-green-500 gap-2 flex items-center py-3 px-5 text-sm font-medium text-center text-gray-900 rounded-lg bg-[#41C9E2] sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
           >
+            <FaCheck />
             Submit
           </button>
           <button
             onClick={()=>navigate(-1)}
-            className=" py-3 px-5 text-sm font-medium text-center text-gray-900 rounded-lg bg-[#ACE2E1] sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+            className=" hover:text-white hover:bg-red-500 flex items-center gap-2 py-3 px-5 text-sm font-medium text-center text-gray-900 rounded-lg bg-[#ACE2E1] sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
           >
+            <IoIosCloseCircle/>
             Cancel
           </button>
         </div>
@@ -253,9 +265,6 @@ const Item = () => {
                             <th scope="col" className="px-5 py-3 text-center">
                                 Created At
                             </th>
-                            <th scope="col" className="px-5 py-3 text-center">
-                                Modified At
-                            </th>
                             <th scope="col" className="px-6 py-3 text-center">
                                 Edit
                             </th>
@@ -267,37 +276,34 @@ const Item = () => {
                     <tbody>
                       {daftarItem.map((item)=>(
                           <tr key={item._id} className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-                              <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center">
+                              <th scope="row" className="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center">
                                   {item.code}
                               </th>
-                              <td className="px-6 py-4 text-center">
+                              <td className="px-6 py-3 text-center">
                                   {item.name}
                               </td>
-                              <td className="px-6 py-4 text-center">
-                                  {item.price}
+                              <td className="px-6 py-3 text-center">
+                                  {formatCurrency(item.price) || 0}
                               </td>
-                              <td className="px-6 py-4 text-center">
+                              <td className="px-6 py-3 text-center">
                                   {item.service}
                               </td>
-                              <td className="px-2 py-4 text-center">
+                              <td className="px-2 py-3 text-center">
                                   {new Date(item.createdAt).toISOString().split('T')[0]}
                               </td>
-                              <td className="px-3 py-4 text-center">
-                                  {new Date(item.updatedAt).toISOString().split('T')[0]}
-                              </td>
-                              <td className="px-6 py-4 text-center">
+                              <td className="px-3 py-3 text-center">
                               <button 
                               onClick={()=>navigate("detail",{state: {_id: item._id}})}
                               type='button'
-                              className = "py-1 px-3 text-sm font-normal text-center text-gray-900 rounded-lg bg-colorPicker-submit sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                              className = "rounded-full p-2 text-sm font-normal text-center text-gray-900 rounded-lg hover:bg-yellow-300 sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
                               >
-                                    Edit
+                                    <HiOutlinePencilAlt className='w-5 h-5 rounded-full'/>
                               </button>
                               </td>
-                              <td className="px-6 py-4 text-center">
-                                  <button className='py-1 px-2 text-sm font-normal text-center text-gray-900 rounded-lg bg-red-600 sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800'
+                              <td className="px-6 py-3 text-center">
+                                  <button className='rounded-full p-2 text-sm font-normal text-center text-gray-900 rounded-lg sm:w-fit hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800'
                                   onClick={() => onItemDelete(item._id)}>
-                                    Delete
+                                    <IoTrashBin className=' w-5 h-5 rounded-full'/>
                                   </button>
                               </td>
                           </tr>

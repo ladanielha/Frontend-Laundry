@@ -46,7 +46,7 @@ const useMessage = () => {
   }
 
   const confirmRemove = (action) => {
-    confirm("Are you sure?", "You won't be able to revert this!", action)
+    confirm("Are you sure?", "Do you really want to delete this data?", action)
   }
 
   return {success, error, confirm, confirmRemove}

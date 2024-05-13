@@ -69,9 +69,6 @@ const CustomerUpdate = () => {
                 </h2>
                 <div className="divide-y-2 divide-black ">
                 <div className="my-5 gap-5">
-                    <div className="block mb-5 text-lg font-medium text-gray-900 dark:text-gray-300">
-                        Update Customer
-                    </div>
                         <div className="w-full flex  flex-direction-column gap-5">
                         <div className="w-full py-1">
                         {" "}

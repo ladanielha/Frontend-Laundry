@@ -61,16 +61,13 @@ const ItemUpdate = () =>{
       }, [state._id])
 
     return(
-        <section className="bg-[#F7EEDD] dark:bg-gray-900">
-          <div className="py-2 lg:py-16 px-4 mx-auto max-w-screen-md">
+        <section className="bg-[#F7EEDD] dark:bg-gray-900 h-full">
+          <div className="py-2 lg:py-16 px-4 mx-auto max-w-screen-md h-full">
                 <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-center text-gray-900 dark:text-white block">
                 Update Item
                 </h2>
                 <div className="divide-y-2 divide-black ">
                 <div className="my-5 gap-5">
-                    <div className="block mb-5 text-lg font-medium text-gray-900 dark:text-gray-300">
-                        Update Item
-                    </div>
                         <div className="w-full flex  flex-direction-column gap-5">
                         <div className="w-1/2 py-1">
                         {" "}
