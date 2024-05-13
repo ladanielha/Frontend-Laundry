@@ -236,11 +236,13 @@ export default function Transactions() {
   const reloadCustomer = () => {
     setOnName("");
     setOnPhone("");
+    setSearchTerm("");
   };
   const reloadItem = () => {
     setNameItem("");
     setOnPrice("");
     setOnService("");
+    setSearchTermItem("");
   };
 
   const handleItemClick = (item) => {
