@@ -1,4 +1,4 @@
-export const OrderInit = {
+export const TransactionInit = {
     nomor: "",
     tanggal: "",
     dibayar: 0,

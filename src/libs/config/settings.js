@@ -3,6 +3,8 @@ export const BASE_URL = "http://localhost:3000";
 export const STORAGE = localStorage;
 export const TOKEN_KEY = "token";
 export const TOKEN_PREFIX = "";
+export const ADMIN_KEY = "admin";
+export const ADMIN_PREFIX = "";
 
 export const CURRENCY = 'IDR';
 
