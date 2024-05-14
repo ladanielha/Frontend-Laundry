@@ -4,9 +4,19 @@ import logo from "../assets/logowhite.png";
 import { AiOutlinePoweroff } from "react-icons/ai";
 import { FaBox, FaClipboardList } from "react-icons/fa";
 import { MdPeopleAlt } from "react-icons/md";
+import useJWT from "../libs/hooks/useJWT";
+import { useContext } from "react";
+import { ContextApplication } from "../libs/config/contexts";
+
 const Navbar = () => {
+  const jwt = useJWT();
+
+  const applcation = useContext(ContextApplication);
+
   const navigate = useNavigate();
   const handleLogout = () => {
+    jwt.signOut();
+    applcation.setIsAuthenticated(false);
     navigate("/signin", { replace: true });
   };
   return (

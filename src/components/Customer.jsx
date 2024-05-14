@@ -16,6 +16,9 @@ import { IoIosCloseCircle } from "react-icons/io";
 import { HiOutlinePencilAlt } from "react-icons/hi";
 import { IoTrashBin } from "react-icons/io5";
 import Search from "./widgets/Search";
+import useValidator from "../libs/hooks/useValidator";
+import Validator from "./widgets/MessageValidator";
+import MessageValidator from "./widgets/MessageValidator";
 // import GenerateId from "../utils/GenerateId";
 
 const Customer = () => {
@@ -28,7 +31,8 @@ const Customer = () => {
   const [customer, setCustomer] = useState(CustomerInit);
   const [daftarCustomer, setDaftarCustomer] = useState([]);
   const [paginateCustomer, setPaginateCustomer] = useState(PaginationData);
-
+  // const [customerValidations , setcustomerValidations] = useState({name:null, phonenumberL:null})
+  const customervalidator = useValidator({name:null, phonenumber:null});
   const onCreateCustomer = () => {
     const url = `${BASE_URL}/customer/`;
     const config = {
@@ -36,16 +40,17 @@ const Customer = () => {
         Authorization: jwt.get(),
       },
     };
-
+    customervalidator.reset()
     axios
       .post(url, customer, config)
       .then((response) => {
         message.success(response);
-        navigate("/customer");
+        navigate(0);
       })
       .catch((error) => {
         console.log(`apa error catch ? ${error}`);
         message.error(error);
+        customervalidator.except(error);
       });
   };
 
@@ -67,6 +72,7 @@ const Customer = () => {
         setPaginateCustomer(paginate);
       })
       .catch((error) => {
+        console.log(error.data);
         console.log(`apa error catch ? ${error}`);
         message.error(error);
       });
@@ -88,7 +94,7 @@ const Customer = () => {
           navigate(-1);
         })
         .catch((error) => {
-          message.error(error);
+          message.error(error);1
         });
     });
   };
@@ -140,6 +146,9 @@ const Customer = () => {
                   }
                   required=""
                 />
+                
+                <MessageValidator messages={customervalidator.get("name")}/>
+                
               </div>
               <div className="w-1/2">
                 {" "}

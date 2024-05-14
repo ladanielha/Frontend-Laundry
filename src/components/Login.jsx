@@ -52,7 +52,6 @@ const Login = () => {
   return (
     <section className="h-full bg-[#F7EEDD] dark:bg-white-900">
       <div className=" bg-[#F7EEDD] flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-      
         <div className="w-full rounded-lg bg-colorPicker-krem md:mt-0 sm:max-w-md xl:p-0">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1 className="text-xl font-bold leading-tight tracking-tight text-center text-gray-900 md:text-2xl dark:text-white">
