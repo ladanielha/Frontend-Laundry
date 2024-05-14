@@ -31,7 +31,6 @@ const Customer = () => {
   const [customer, setCustomer] = useState(CustomerInit);
   const [daftarCustomer, setDaftarCustomer] = useState([]);
   const [paginateCustomer, setPaginateCustomer] = useState(PaginationData);
-  // const [customerValidations , setcustomerValidations] = useState({name:null, phonenumberL:null})
   const customervalidator = useValidator({ name: null, phonenumber: null });
   const onCreateCustomer = () => {
     const url = `${BASE_URL}/customer/`;
