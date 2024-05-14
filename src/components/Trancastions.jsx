@@ -20,6 +20,8 @@ import { IoIosCloseCircle } from "react-icons/io";
 import { FaCheck } from "react-icons/fa";
 import { TbReload } from "react-icons/tb";
 import Search from "./widgets/Search";
+import useValidator from "../libs/hooks/useValidator";
+import MessageValidator from "./widgets/MessageValidator";
 export default function Transactions() {
   const jwt = useJWT();
   const [searchTerm, setSearchTerm] = useState("");
@@ -46,6 +48,7 @@ export default function Transactions() {
   const message = useMessage();
   const navigate = useNavigate();
   const http = useHTTP();
+  const transactionvalidator= useValidator({"totalPrice":null, "customers.phonenumeber":null})
 
   // let text = "TRX";
   // let code = `${text}-${(count + 1).toString().padStart(6 - text.length, "0")}`;
@@ -70,7 +73,6 @@ export default function Transactions() {
           message.success(response);
         })
         .catch((error) => {
-          console.log(`apa error catch ? ${error}`);
           message.error(error);
         });
     } catch (error) {
@@ -96,7 +98,7 @@ export default function Transactions() {
         navigate("/transaction");
       })
       .catch((error) => {
-        console.log(`apa error catch ? ${error}`);
+        message.error(error)
       });
   };
   // const onTransactionList = (page, search, limit = 2) => {
@@ -136,8 +138,7 @@ export default function Transactions() {
         setPaginateTrasaction(paginate);
       })
       .catch((error) => {
-        console.log(error);
-        // message.error(error);
+        message.error(error);
       });
   };
   const onCreateTransaction = async () => {
@@ -169,8 +170,8 @@ export default function Transactions() {
         });
       })
       .catch((error) => {
-        console.log(`apa error catch ? ${error}`);
         message.error(error);
+        transactionvalidator.except(error);
       });
   };
   const onItemList = async () => {
@@ -184,7 +185,7 @@ export default function Transactions() {
         setDaftarItem(res.data.results);
       })
       .catch((error) => {
-        console.log(`apa error catch ? ${error}`);
+        message.error(error);
       });
   };
   const onSearch = (name) => {
@@ -347,6 +348,7 @@ export default function Transactions() {
                   required=""
                   disabled
                 />
+                <MessageValidator messages={transactionvalidator.get("customers.phonenumber")}/>
               </div>
             </div>
 
@@ -549,6 +551,7 @@ export default function Transactions() {
                   placeholder="Price"
                   required=""
                 />
+                <MessageValidator messages={transactionvalidator.get("totalPrice")}/>
               </div>
             </div>
           </div>

@@ -4,8 +4,8 @@ const MessageValidator = ({ messages }) => {
   return (
     <>
       {messages?.map((message, index) => (
-        <small key={index} className={"d-block text-danger "}>
-          {message.msg}
+        <small key={index} className={"text-red-500 font-bold"}>
+          * {message.msg}
         </small>
       ))}
     </>

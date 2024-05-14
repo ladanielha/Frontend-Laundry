@@ -32,7 +32,7 @@ const Customer = () => {
   const [daftarCustomer, setDaftarCustomer] = useState([]);
   const [paginateCustomer, setPaginateCustomer] = useState(PaginationData);
   // const [customerValidations , setcustomerValidations] = useState({name:null, phonenumberL:null})
-  const customervalidator = useValidator({name:null, phonenumber:null});
+  const customervalidator = useValidator({ name: null, phonenumber: null });
   const onCreateCustomer = () => {
     const url = `${BASE_URL}/customer/`;
     const config = {
@@ -40,7 +40,7 @@ const Customer = () => {
         Authorization: jwt.get(),
       },
     };
-    customervalidator.reset()
+    customervalidator.reset();
     axios
       .post(url, customer, config)
       .then((response) => {
@@ -48,7 +48,6 @@ const Customer = () => {
         navigate(0);
       })
       .catch((error) => {
-        console.log(`apa error catch ? ${error}`);
         message.error(error);
         customervalidator.except(error);
       });
@@ -72,8 +71,6 @@ const Customer = () => {
         setPaginateCustomer(paginate);
       })
       .catch((error) => {
-        console.log(error.data);
-        console.log(`apa error catch ? ${error}`);
         message.error(error);
       });
   };
@@ -94,7 +91,8 @@ const Customer = () => {
           navigate(-1);
         })
         .catch((error) => {
-          message.error(error);1
+          message.error(error);
+          1;
         });
     });
   };
@@ -146,9 +144,7 @@ const Customer = () => {
                   }
                   required=""
                 />
-                
-                <MessageValidator messages={customervalidator.get("name")}/>
-                
+                <MessageValidator messages={customervalidator.get("name")} />
               </div>
               <div className="w-1/2">
                 {" "}
@@ -170,6 +166,7 @@ const Customer = () => {
                   placeholder="Input Service Name"
                   required=""
                 />
+                <MessageValidator messages={customervalidator.get("phonenumber")} />
               </div>
             </div>
             <div className="flex items-center justify-center w-full gap-5 pt-5">
@@ -185,7 +182,7 @@ const Customer = () => {
                 onClick={() => navigate(-1)}
                 className=" hover:text-white hover:bg-red-500 flex items-center gap-2 py-3 px-5 text-sm font-medium text-center text-gray-900 rounded-lg bg-[#ACE2E1] sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
               >
-                <IoIosCloseCircle/>
+                <IoIosCloseCircle />
                 Cancel
               </button>
             </div>
@@ -197,9 +194,7 @@ const Customer = () => {
             </div>
             <div className="flex w-full gap-5 pb-5 flex-direction-column">
               <div className="w-1/2">
-                <label
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                >
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                   Search Customer
                 </label>
                 <Search callback={onCustomerSearch} />
@@ -269,13 +264,15 @@ const Customer = () => {
                             type="button"
                             className="rounded-full p-2 text-sm font-normal text-center text-gray-900 rounded-lg hover:bg-yellow-300 sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
                           >
-                            <HiOutlinePencilAlt className='w-5 h-5 rounded-full'/>
+                            <HiOutlinePencilAlt className="w-5 h-5 rounded-full" />
                           </button>
                         </td>
                         <td className="px-6 py-4 text-center">
-                          <button className='rounded-full p-2 text-sm font-normal text-center text-gray-900 rounded-lg sm:w-fit hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800'
-                                  onClick={() => onCustomerDelete(customer._id)}>
-                                    <IoTrashBin className=' w-5 h-5 rounded-full'/>
+                          <button
+                            className="rounded-full p-2 text-sm font-normal text-center text-gray-900 rounded-lg sm:w-fit hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                            onClick={() => onCustomerDelete(customer._id)}
+                          >
+                            <IoTrashBin className=" w-5 h-5 rounded-full" />
                           </button>
                         </td>
                       </tr>
