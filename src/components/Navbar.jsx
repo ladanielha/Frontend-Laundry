@@ -17,6 +17,8 @@ const Navbar = () => {
   const handleLogout = () => {
     jwt.signOut();
     applcation.setIsAuthenticated(false);
+    localStorage.removeItem("token");
+    localStorage.removeItem("admin");
     navigate("/signin", { replace: true });
   };
   return (
