@@ -8,6 +8,8 @@ import { useEffect, useState } from "react";
 import { BASE_URL } from "../libs/config/settings";
 import axios from "axios";
 import { CustomerInit } from "../data/CustomerData";
+import { FaCheck } from "react-icons/fa";
+import { IoIosCloseCircle } from "react-icons/io";
 
 const CustomerUpdate = () => {
 
@@ -83,7 +85,7 @@ const CustomerUpdate = () => {
                             name='number'
                             value={customer.code}
                             onChange={(e) => onChangeListener.onChangeText(e,customer,setCustomer)}
-                            className="shadow-sm bg-gray-300 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light"
+                            className="shadow-sm bg-[#ACE2E1] border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light"
                         />
                     </div>
                    
@@ -124,19 +126,21 @@ const CustomerUpdate = () => {
                 </div>
                 </div>
                 <div className="w-full items-center flex gap-5 justify-center pt-5">
-            <button
-                onClick={onCustomerUpdate}
-                type="submit"
-                className=" py-3 px-5 text-sm font-medium text-center text-gray-900 rounded-lg bg-[#41C9E2] sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-            >
-                Submit
-            </button>
-            <button
-                onClick={()=>navigate(-1)}
-                className=" py-3 px-5 text-sm font-medium text-center text-gray-900 rounded-lg bg-[#ACE2E1] sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-            >
-                Cancel
-            </button>
+                  <button
+                  onClick={onCustomerUpdate}
+                  type="submit"
+                  className=" hover:text-white hover:bg-green-500 gap-2 flex items-center py-3 px-5 text-sm font-medium text-center text-gray-900 rounded-lg bg-[#41C9E2] sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                >
+                  <FaCheck />
+                  Submit
+                </button>
+                <button
+                  onClick={() => navigate(-1)}
+                  className=" hover:text-white hover:bg-red-500 flex items-center gap-2 py-3 px-5 text-sm font-medium text-center text-gray-900 rounded-lg bg-[#ACE2E1] sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                >
+                  <IoIosCloseCircle/>
+                  Cancel
+                </button>
                 </div>
                 </div>
         

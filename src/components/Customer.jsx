@@ -87,7 +87,7 @@ const Customer = () => {
         .delete(url, config)
         .then((response) => {
           message.success(response);
-          navigate(-1);
+          navigate(0);
         })
         .catch((error) => {
           message.error(error);
