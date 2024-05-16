@@ -1,8 +1,8 @@
 const Footer = () => {
   return (
-    <nav className="bg-colorPicker-biruBG border-gray-200 dark:bg-gray-900 dark:border-gray-700">
-      <div className="max-w-screen-xl flex flex-wrap items-center justify-center text-white mx-auto p-4">
-        © 2024 Kucekan Juara. All rights reserved.
+    <nav className="sticky bottom-0 border-gray-200 bg-colorPicker-biruBG dark:bg-gray-900 dark:border-gray-700">
+      <div className="flex flex-wrap items-center justify-center max-w-screen-xl p-4 mx-auto text-white">
+        © 2024 Kucekin Juara. All rights reserved.
       </div>
     </nav>
   );

@@ -6,20 +6,16 @@ import useMessage from "../libs/hooks/useMessage";
 import { useEffect, useRef, useState } from "react";
 import { PaginationData } from "../data/PaginationsData";
 import { axiosInstance } from "../libs/config/config";
-import useFormatter from "../libs/hooks/useFormatter";
 import { TransactionInit } from "../data/TransactionData";
 import { CustomerInit } from "../data/CustomerData";
 import { ItemInit } from "../data/ItemData";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import PageLimit from "./widgets/PageLimit";
-import Pagination from "./widgets/Pagination";
 import { AdminInit } from "../data/AdminData";
 import useChangeListener from "../libs/hooks/useChangeListener";
 import { IoIosCloseCircle } from "react-icons/io";
 import { FaCheck } from "react-icons/fa";
 import { TbReload } from "react-icons/tb";
-import Search from "./widgets/Search";
 import useValidator from "../libs/hooks/useValidator";
 import MessageValidator from "./widgets/MessageValidator";
 export default function Transactions() {
@@ -33,22 +29,23 @@ export default function Transactions() {
   const [transaction, setTransaction] = useState(TransactionInit);
   const [onName, setOnName] = useState("");
   const [onPhone, setOnPhone] = useState("");
-  const [onNameItem, setNameItem] = useState("");
+  const [onNameItem, setNameItem] = useState("");;
   const [onService, setOnService] = useState("");
   const [onPrice, setOnPrice] = useState("");
   const [daftarCustomer, setDaftarCustomer] = useState([]);
   const [daftarItem, setDaftarItem] = useState([]);
   const [daftarTransaction, setDaftarTransaction] = useState([]);
-  const [daftarAdmin, setDaftarAdmin] = useState([]);
   const [searchCustomer, setSearchCustomer] = useState([]);
   const [paginateTransaction, setPaginateTrasaction] = useState(PaginationData);
   const [customerAdd, setCustomerAdd] = useState(CustomerInit);
-  const [count, setCount] = useState(0);
   const onChangeListener = useChangeListener();
   const message = useMessage();
   const navigate = useNavigate();
   const http = useHTTP();
-  const transactionvalidator= useValidator({"totalPrice":null, "customers.phonenumeber":null})
+  const transactionvalidator = useValidator({
+    totalPrice: null,
+    "customers.phonenumber": null,
+  });
 
   // let text = "TRX";
   // let code = `${text}-${(count + 1).toString().padStart(6 - text.length, "0")}`;
@@ -98,7 +95,7 @@ export default function Transactions() {
         navigate("/transaction");
       })
       .catch((error) => {
-        message.error(error)
+        message.error(error);
       });
   };
   // const onTransactionList = (page, search, limit = 2) => {
@@ -209,20 +206,9 @@ export default function Transactions() {
     );
     setSearchItem(filteredItem);
   };
-  const onTransactionPaginate = (page) => {
-    onTransactionList(page);
-  };
 
   const addCustomer = () => {
     navigate("/customer");
-  };
-
-  const onTransactionSearch = (search) => {
-    onTransactionList(null, search);
-  };
-
-  const onTransactionLimit = (limit) => {
-    onTransactionList(null, null, limit);
   };
 
   const handleCustomerClick = (customer) => {
@@ -284,7 +270,7 @@ export default function Transactions() {
   }, [searchTerm]);
 
   return (
-    <section className="bg-[#F7EEDD] dark:bg-gray-900">
+    <section className="bg-[#F7EEDD] dark:bg-black-900 h-full">
       <div className="max-w-screen-md px-4 py-2 mx-auto lg:py-16 ">
         <h2 className="block mb-4 text-4xl font-extrabold tracking-tight text-center text-gray-900 dark:text-white">
           Transaction
@@ -300,7 +286,7 @@ export default function Transactions() {
                 <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                   Customer Name
                 </label>
-                <div className="flex gap-2 relative ">
+                <div className="relative flex gap-2 ">
                   <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
                     <FiSearch />
                   </div>
@@ -314,14 +300,14 @@ export default function Transactions() {
                   />
                   <button
                     type="button"
-                    className=" py-3 px-5 text-sm font-medium text-center text-gray-900 rounded-lg bg-white sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                    className="px-5 py-3 text-sm font-medium text-center text-gray-900 bg-white rounded-lg sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
                     onClick={reloadCustomer}
                   >
                     <TbReload />
                   </button>
                 </div>
                 {searchCustomer.length > 0 ? (
-                  <div className="bg-gray-50 border divide-y-1  divide-black border-gray-300 text-gray-900 text-sm rounded-lg p-2.5 overflow-y-auto h-[120px] ">
+                  <div className="bg-gray-50 border divide-y-1 pt-1  divide-black border-gray-300 text-gray-900 text-sm rounded-lg p-2.5 overflow-y-auto h-[120px] ">
                     {searchCustomer.map((customer) => (
                       <div
                         key={customer.id}
@@ -348,7 +334,9 @@ export default function Transactions() {
                   required=""
                   disabled
                 />
-                <MessageValidator messages={transactionvalidator.get("customers.phonenumber")}/>
+                <MessageValidator
+                  messages={transactionvalidator.get("customers.phonenumber")}
+                />
               </div>
             </div>
 
@@ -485,7 +473,7 @@ export default function Transactions() {
                 <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                   Item Name
                 </label>
-                <div className="flex relative gap-2  ">
+                <div className="relative flex gap-2 ">
                   <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
                     <FiSearch />
                   </div>
@@ -499,14 +487,14 @@ export default function Transactions() {
                   />
                   <button
                     type="button"
-                    className=" py-3 px-5 text-sm font-medium text-center text-gray-900 rounded-lg bg-white sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                    className="px-5 py-3 text-sm font-medium text-center text-gray-900 bg-white rounded-lg sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
                     onClick={reloadItem}
                   >
                     <TbReload />
                   </button>
                 </div>
                 {searchItem.length > 0 ? (
-                  <div className="bg-gray-50 border divide-y-1  divide-black border-gray-300 text-gray-900 text-sm rounded-lg p-2.5 overflow-y-auto h-13 ">
+                  <div className="bg-gray-50 pt-1 border divide-y-1  divide-black border-gray-300 text-gray-900 text-sm rounded-lg p-2.5 overflow-y-auto h-[120px] ">
                     {searchItem.map((item) => (
                       <div
                         key={item.id}
@@ -551,12 +539,14 @@ export default function Transactions() {
                   placeholder="Price"
                   required=""
                 />
-                <MessageValidator messages={transactionvalidator.get("totalPrice")}/>
+                <MessageValidator
+                  messages={transactionvalidator.get("totalPrice")}
+                />
               </div>
             </div>
           </div>
         </div>
-        <div className="gap-5 py-5 my-5 bg-[#ACE2E1] rounded-lg pl-2">
+        <div className="gap-5 py-5 pl-2 my-5 bg-white rounded-lg">
           <div className="block mb-5 text-lg font-medium text-gray-900 dark:text-gray-300">
             Summary
           </div>
@@ -607,6 +597,26 @@ export default function Transactions() {
                 htmlFor="email"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
               >
+                Service Name
+              </label>
+            </div>
+            <div className="w-1/2">
+              {" "}
+              <label
+                htmlFor="email"
+                className="block mb-2 text-sm text-gray-900 dark:text-gray-300"
+              >
+                {onService}
+              </label>
+            </div>
+          </div>
+          <div className="flex w-full gap-5 pb-5 flex-direction-row">
+            <div className="w-1/2">
+              {" "}
+              <label
+                htmlFor="email"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+              >
                 Total Price
               </label>
             </div>
@@ -638,87 +648,6 @@ export default function Transactions() {
             <IoIosCloseCircle />
             Cancel
           </button>
-        </div>
-        <div className="gap-5 py-5 my-5">
-          <div className="block mb-5 text-lg font-medium text-gray-900 dark:text-gray-300">
-            Transaction Detail
-          </div>
-          <div className="flex w-full gap-5 pb-5 flex-direction-column">
-            <div className="w-1/2">
-              {" "}
-              <label
-                htmlFor="email"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-              >
-                Transaction Name
-              </label>
-            <Search callback={onTransactionSearch}/>
-            </div>
-            <div className="w-1/2">
-              <PageLimit callback={onTransactionLimit} />
-            </div>
-          </div>
-          <div className="flex items-center justify-center w-full gap-5 flex-direction-column">
-            {/* Buat Tabel */}
-            <div className="relative overflow-x-auto shadow-md sm:rounded-lg ">
-              <table className="w-full text-sm text-left text-gray-500 rtl:text-right dark:text-gray-400 ">
-                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                  <tr>
-                    <th scope="col" className="px-6 py-3 text-center">
-                      Code
-                    </th>
-                    <th scope="col" className="px-6 py-3 text-center">
-                      Total Price
-                    </th>
-                    <th scope="col" className="px-6 py-3 text-center">
-                      Item Name
-                    </th>
-                    <th scope="col" className="px-5 py-3 text-center">
-                      Customer Name
-                    </th>
-                    <th scope="col" className="px-5 py-3 text-center">
-                      Created At
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {daftarTransaction.map((customer) => (
-                    <tr
-                      key={customer._id}
-                      className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700"
-                    >
-                      <th
-                        scope="row"
-                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center"
-                      >
-                        {customer.code || ""}
-                      </th>
-                      <td className="px-6 py-4 text-center">
-                        {formatCurrency(customer.totalPrice) || 0}
-                      </td>
-                      <td className="px-6 py-4 text-center">
-                        {customer.items.name || ""}
-                      </td>
-                      <td className="px-2 py-4 text-center">
-                        {customer.customers.name || ""}
-                      </td>
-                      <td className="px-3 py-4 text-center">
-                        {
-                          new Date(customer.createdAt)
-                            .toISOString()
-                            .split("T")[0]
-                        }
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <Pagination
-            pagination={paginateTransaction}
-            callback={onTransactionPaginate}
-          />
         </div>
       </div>
     </section>

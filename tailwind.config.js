@@ -5,6 +5,9 @@ module.exports = {
     'node_modules/flowbite-react/lib/esm/**/*.js'
   ],
   theme: {
+     fontFamily: {
+      'sans': ['Poppins', 'sans-serif'],
+    },
     colors: {
       colorPicker : {
         biruBG : '#008DDA',

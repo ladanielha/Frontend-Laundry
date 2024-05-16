@@ -1,5 +1,5 @@
-import React from "react";
-import Transactions from "../components/Trancastions";
+
+import Transactions from "../components/Transactions";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 

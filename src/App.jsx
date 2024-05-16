@@ -1,8 +1,4 @@
-import {
-  Route,
-  BrowserRouter,
-  Routes,
-} from "react-router-dom";
+import { Route, BrowserRouter, Routes } from "react-router-dom";
 import OutletPage from "./outlet/OutletPage";
 import ItemPage from "./pages/ItemPage";
 import LoginPage from "./pages/LoginPage";
@@ -13,6 +9,7 @@ import CustomerPage from "./pages/CustomerPage";
 import { useState, useEffect } from "react";
 import ItemUpdatePage from "./pages/ItemUpdatePage";
 import CustomerUpdatePage from "./pages/CustomerUpdatePage";
+import TransactionDetailPage from "./pages/TransactionDetailPage";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -34,6 +31,10 @@ function App() {
             <>
               <Route path="/transaction" element={<OutletPage />}>
                 <Route index={true} element={<TransactionPage />}></Route>
+                <Route
+                  path={"detail"}
+                  element={<TransactionDetailPage />}
+                ></Route>
               </Route>
               <Route path="/item" element={<OutletPage />}>
                 <Route index={true} element={<ItemPage />}></Route>

@@ -1,7 +1,6 @@
-import logo from "../assets/logowhite.png";
+import logo from "../assets/logo.png";
 // import logojson from "../assets/logo.json"
 import { useContext, useMemo, useState } from "react";
-
 import { UserInit, UserValidator } from "../data/UserData";
 import { ContextApplication } from "../libs/config/contexts";
 import useJWT from "../libs/hooks/useJWT";
@@ -50,12 +49,16 @@ const Login = () => {
   };
 
   return (
-    <section className="h-full bg-[#F7EEDD] dark:bg-white-900">
-      <div className=" bg-[#F7EEDD] flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-        <div className="w-full rounded-lg bg-colorPicker-krem md:mt-0 sm:max-w-md xl:p-0">
+    <section className="flex justify-center flex-1 h-screen bg-[#F7EEDD] md:h-full md:items-center dark:bg-white-900">
+      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto sm:h-full sm:flex md:h-screen lg:py-0 md:flex md:items-center sm:items-center">
+        <div className="w-full bg-white rounded-lg md:mt-0 sm:max-w-md xl:p-0">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+            <div>
+              <img className="w-20 h-20 mx-auto" src={logo} alt="logo" />
+            </div>
+
             <h1 className="text-xl font-bold leading-tight tracking-tight text-center text-gray-900 md:text-2xl dark:text-white">
-              WELCOME TO KUCEKAN JUARA
+              WELCOME TO KUCEKIN JUARA
             </h1>
             <form className="space-y-4 md:space-y-6" action="#">
               <div>
@@ -99,15 +102,6 @@ const Login = () => {
               >
                 LOGIN
               </button>
-              <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                Don’t have an account yet?{" "}
-                <a
-                  href="/register"
-                  className="font-medium text-primary-600 hover:underline dark:text-primary-500"
-                >
-                  Register
-                </a>
-              </p>
             </form>
           </div>
         </div>
