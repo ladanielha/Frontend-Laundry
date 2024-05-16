@@ -11,6 +11,9 @@ import useValidator from "../libs/hooks/useValidator";
 import { BASE_URL } from "../libs/config/settings";
 import useJWT from "../libs/hooks/useJWT";
 import { FaCheckCircle } from "react-icons/fa";
+import Swal from "sweetalert2";
+import axios from "axios";
+
 export default function TransactionDetail() {
   const [paginateTransaction, setPaginateTrasaction] = useState(PaginationData);
   const onChangeListener = useChangeListener();
@@ -63,6 +66,85 @@ export default function TransactionDetail() {
   }, []);
   const onTransactionPaginate = (page) => {
     onTransactionList(page);
+  };
+
+  const alertStatusLoundry = (id) => {
+    Swal.fire({
+      title: "Ubah status laundry?",
+      text: "Apakah pencucian sudah selesai",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Tidak",
+      confirmButtonText: "Ya!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        {
+          const url = `${BASE_URL}/transaction/${id}`;
+          const config = {
+            headers: {
+              Authorization: jwt.get(),
+            },
+          };
+          const statusLaundry = { statusLaundry: "Done" };
+          axios
+            .put(url, statusLaundry, config)
+            .then((response) => {
+              console.log(response);
+              message.success(response);
+              navigate(0);
+            })
+            .catch((error) => {
+              message.error(error);
+            });
+        }
+        Swal.fire({
+          title: "Change!",
+          text: "Status Change.",
+          icon: "success",
+        });
+      }
+    });
+  };
+  const alertStatusPayment = (id) => {
+    Swal.fire({
+      title: "Ubah status payment?",
+      text: "Apakah pembayaran sudah selesai?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Tidak",
+      confirmButtonText: "Ya!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        {
+          const url = `${BASE_URL}/transaction/${id}`;
+          const config = {
+            headers: {
+              Authorization: jwt.get(),
+            },
+          };
+          const statusPayment = { statusPayment: "Paid" };
+          axios
+            .put(url, statusPayment, config)
+            .then((response) => {
+              console.log(response);
+              message.success(response);
+              navigate(0);
+            })
+            .catch((error) => {
+              message.error(error);
+            });
+        }
+        Swal.fire({
+          title: "Change!",
+          text: "Status Change.",
+          icon: "success",
+        });
+      }
+    });
   };
   return (
     <section className="bg-[#F7EEDD] dark:bg-black-900 h-screen  h-96 bg-cover">
@@ -144,21 +226,22 @@ export default function TransactionDetail() {
                         {formatCurrency(transaction.totalPrice) || 0}
                       </td>
                       <td className="px-2 py-4 text-center ">
-                        <button
-                          data-modal-target="popupmodal-status-loundry"
-                          data-modal-toggle="popupmodal-status-loundry"
-                          type="button"
-                        >
-                          {transaction.statusLaundry === "Process" ? (
+                        {transaction.statusLaundry === "Process" ? (
+                          <button
+                            onClick={() => {
+                              alertStatusLoundry(transaction._id);
+                            }}
+                            type="button"
+                          >
                             <span className="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-yellow-300 border border-yellow-300">
                               Process
                             </span>
-                          ) : (
-                            <span className="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-green-300 border border-green-300">
-                              Done
-                            </span>
-                          )}
-                        </button>
+                          </button>
+                        ) : (
+                          <span className="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-green-300 border border-green-300">
+                            Done
+                          </span>
+                        )}
                       </td>
                       <td className="px-3 py-4 text-center ">
                         <button
@@ -167,9 +250,16 @@ export default function TransactionDetail() {
                           type="button"
                         >
                           {transaction.statusPayment === "UnPaid" ? (
-                            <span className="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-red-300 border border-yellow-300">
-                              {transaction.statusPayment}
-                            </span>
+                            <button
+                              onClick={() => {
+                                alertStatusPayment(transaction._id);
+                              }}
+                              type="button"
+                            >
+                              <span className="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-red-300 border border-yellow-300">
+                                {transaction.statusPayment}
+                              </span>
+                            </button>
                           ) : (
                             <span className="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-green-300 border border-green-300">
                               {transaction.statusPayment}
@@ -181,140 +271,6 @@ export default function TransactionDetail() {
                   ))}
                 </tbody>
               </table>
-            </div>
-          </div>
-
-          <div
-            id="popup-modal"
-            tabIndex={-1}
-            className="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
-          >
-            <div className="relative w-full max-w-md max-h-full p-4">
-              <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                <button
-                  type="button"
-                  className="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                  data-modal-hide="popup-modal"
-                >
-                  <svg
-                    className="w-3 h-3"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 14 14"
-                  >
-                    <path
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-                    />
-                  </svg>
-                  <span className="sr-only">Close modal</span>
-                </button>
-                <div className="p-4 text-center md:p-5">
-                  <svg
-                    className="w-12 h-12 mx-auto mb-4 text-gray-400 dark:text-gray-200"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                    />
-                  </svg>
-                  <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-                    Are you sure you want to delete this product?
-                  </h3>
-                  <button
-                    data-modal-hide="popup-modal"
-                    type="button"
-                    className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center"
-                  >
-                    Yes, I'm sure
-                  </button>
-                  <button
-                    data-modal-hide="popup-modal"
-                    type="button"
-                    className="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-                  >
-                    No, cancel
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div
-            id="popupmodal-status-loundry"
-            tabIndex={-1}
-            className="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
-          >
-            <div className="relative w-full max-w-md max-h-full p-4">
-              <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                <button
-                  type="button"
-                  className="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                  data-modal-hide="popupmodal-status-loundry"
-                >
-                  <svg
-                    className="w-3 h-3"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 14 14"
-                  >
-                    <path
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-                    />
-                  </svg>
-                  <span className="sr-only">Close modal</span>
-                </button>
-                <div className="p-4 text-center md:p-5">
-                  <svg
-                    className="w-12 h-12 mx-auto mb-4 text-gray-400 dark:text-gray-200"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                    />
-                  </svg>
-                  <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-                    Are you sure you want to delete this product?
-                  </h3>
-                  <button
-                    data-modal-hide="popupmodal-status-loundry"
-                    type="button"
-                    className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center"
-                  >
-                    Yes, I'm sure
-                  </button>
-                  <button
-                    data-modal-hide="popupmodal-status-loundry"
-                    type="button"
-                    className="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-                  >
-                    No, cancel
-                  </button>
-                </div>
-              </div>
             </div>
           </div>
           <Pagination
