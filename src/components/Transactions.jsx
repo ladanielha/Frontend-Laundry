@@ -465,13 +465,13 @@ export default function Transactions() {
 
           <div className="gap-5 py-5 my-5">
             <div className="block mb-5 text-lg font-medium text-gray-900 dark:text-gray-300">
-              Item Detail
+              Service Detail
             </div>
             <div className="flex w-full gap-5 pb-5 flex-direction-column">
               <div className="w-1/2">
                 {" "}
                 <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                  Item Name
+                  Service Name
                 </label>
                 <div className="relative flex gap-2 ">
                   <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">

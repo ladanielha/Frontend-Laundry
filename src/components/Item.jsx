@@ -126,12 +126,12 @@ const Item = () => {
     <section className="bg-[#F7EEDD] dark:bg-gray-900">
       <div className="py-2 lg:py-16 px-4 mx-auto max-w-screen-md  ">
         <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-center text-gray-900 dark:text-white block">
-          Item
+          Service
         </h2>
         <div className="divide-y-2 divide-black ">
           <div className="my-5 gap-5">
             <div className="block mb-5 text-lg font-medium text-gray-900 dark:text-gray-300">
-              Create Item
+              Create Service
             </div>
             <div className="w-full flex  flex-direction-column gap-5">
               <div className="w-full py-1">
@@ -140,7 +140,7 @@ const Item = () => {
                   htmlFor=""
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                 >
-                  Item Name
+                  Service Name
                 </label>
                 <input
                   name="name"
@@ -149,7 +149,7 @@ const Item = () => {
                     onChangeListener.onChangeText(e, item, setItem)
                   }
                   className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light"
-                  placeholder="Input Item Name"
+                  placeholder="Input Service Name"
                   required=""
                 />
                 <MessageValidator messages={itemvalidator.get("name")} />
@@ -199,7 +199,7 @@ const Item = () => {
                     htmlFor=""
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                   >
-                    Service Name
+                    Duration
                   </label>
                   <input
                     name="service"
@@ -208,7 +208,7 @@ const Item = () => {
                       onChangeListener.onChangeText(e, item, setItem)
                     }
                     className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light"
-                    placeholder="Input Service Name"
+                    placeholder="Input Duration in days"
                     required=""
                   />
                   <MessageValidator messages={itemvalidator.get("service")} />
@@ -236,7 +236,7 @@ const Item = () => {
 
           <div className="my-5 py-5 gap-5">
             <div className="block mb-5 text-lg font-medium text-gray-900 dark:text-gray-300">
-              Item Detail
+              Service Detail
             </div>
             <div className="w-full flex  flex-direction-column gap-5 pb-5">
               <div className="w-1/2">
@@ -245,7 +245,7 @@ const Item = () => {
                   htmlFor="email"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                 >
-                  Item Name
+                  Service Name
                 </label>
                 <Search callback={onItemSearch} />
               </div>
@@ -260,16 +260,16 @@ const Item = () => {
                   <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
                       <th scope="col" className="px-6 py-3 text-center">
-                        Item Number
+                        Service Number
                       </th>
                       <th scope="col" className="px-6 py-3 text-center">
-                        Item Name
+                        Service Name
                       </th>
                       <th scope="col" className="px-6 py-3 text-center">
                         Price
                       </th>
                       <th scope="col" className="px-6 py-3 text-center">
-                        Service
+                        Service Duration
                       </th>
                       <th scope="col" className="px-5 py-3 text-center">
                         Created At

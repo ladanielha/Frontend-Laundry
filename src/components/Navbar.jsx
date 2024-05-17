@@ -174,7 +174,7 @@ const Navbar = () => {
               >
                 {" "}
                 <FaBox />
-                Item
+                Service
               </button>
             </li>
             <li>

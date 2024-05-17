@@ -66,7 +66,7 @@ const ItemUpdate = () =>{
         <section className="bg-[#F7EEDD] dark:bg-gray-900 h-full">
           <div className="py-2 lg:py-16 px-4 mx-auto max-w-screen-md h-full">
                 <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-center text-gray-900 dark:text-white block">
-                Update Item
+                Update Service
                 </h2>
                 <div className="divide-y-2 divide-black ">
                 <div className="my-5 gap-5">
@@ -77,7 +77,7 @@ const ItemUpdate = () =>{
                             htmlFor=""
                             className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                                 >
-                                    Item Number
+                                    Service Number
                         </label>
                         <input
                             disabled
@@ -93,7 +93,7 @@ const ItemUpdate = () =>{
                             htmlFor=""
                             className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                             >
-                                Item Name
+                                Service Name
                         </label>
                         <input
                         name='name'
@@ -127,7 +127,7 @@ const ItemUpdate = () =>{
                     htmlFor=""
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                     >
-                    Service Name
+                    Service Duration
                     </label>
                     <input
                     name='service'
