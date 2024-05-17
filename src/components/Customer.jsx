@@ -52,7 +52,7 @@ const Customer = () => {
       });
   };
 
-  const onCustomerList = (page, search, limit = 2) => {
+  const onCustomerList = (page, search, limit = 5) => {
     const url = `${BASE_URL}/customer/`;
     const params = { page, limit, search };
     const config = {

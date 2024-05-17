@@ -32,6 +32,7 @@ export default function Transactions() {
   const [onNameItem, setNameItem] = useState("");;
   const [onService, setOnService] = useState("");
   const [onPrice, setOnPrice] = useState("");
+  
   const [daftarCustomer, setDaftarCustomer] = useState([]);
   const [daftarItem, setDaftarItem] = useState([]);
   const [daftarTransaction, setDaftarTransaction] = useState([]);
@@ -157,7 +158,8 @@ export default function Transactions() {
       .post(url, payload, config)
       .then((response) => {
         message.success(response);
-        navigate(0);
+        navigate("/transaction/detail");
+        
         Swal.fire({
           position: "center",
           icon: "success",

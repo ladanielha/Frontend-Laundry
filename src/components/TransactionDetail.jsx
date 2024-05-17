@@ -27,7 +27,7 @@ export default function TransactionDetail() {
   });
 
   const [daftarTransaction, setDaftarTransaction] = useState([]);
-  const onTransactionList = (page, search, limit = 2) => {
+  const onTransactionList = (page, search, limit = 5) => {
     const url = `${BASE_URL}/transaction/`;
     const params = { page, limit, search };
     const config = {

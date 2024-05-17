@@ -63,7 +63,7 @@ const Item = () => {
     }).format(data);
   };
 
-  const onItemList = (page, search, limit = 2) => {
+  const onItemList = (page, search, limit = 5 ) => {
     const url = `${BASE_URL}/item/`;
     const params = { page, limit, search };
     const config = {
