@@ -106,7 +106,7 @@ const Navbar = () => {
     //     </div>
     //   </div>
     // </nav>
-    <nav className="border-gray-200 bg-colorPicker-biruBG dark:bg-gray-900 font-family-[Poppins]">
+    <nav className="border-gray-200 bg-colorPicker-biruBG dark:bg-gray-900 font-family-[Poppins] sticky top-0 z-20">
       <div className="flex flex-wrap items-center justify-between max-w-screen-xl p-4 mx-auto">
         <a
           href="/transaction"

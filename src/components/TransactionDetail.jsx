@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
+import axios from "axios";
 import { PaginationData } from "../data/PaginationsData";
 import PageLimit from "./widgets/PageLimit";
 import Pagination from "./widgets/Pagination";
@@ -6,27 +8,17 @@ import Search from "./widgets/Search";
 import useMessage from "../libs/hooks/useMessage";
 import { useNavigate } from "react-router-dom";
 import useHTTP from "../libs/hooks/useHTTP";
-import useChangeListener from "../libs/hooks/useChangeListener";
-import useValidator from "../libs/hooks/useValidator";
 import { BASE_URL } from "../libs/config/settings";
 import useJWT from "../libs/hooks/useJWT";
-import { FaCheckCircle } from "react-icons/fa";
-import Swal from "sweetalert2";
-import axios from "axios";
 
 export default function TransactionDetail() {
-  const [paginateTransaction, setPaginateTrasaction] = useState(PaginationData);
-  const onChangeListener = useChangeListener();
   const jwt = useJWT();
   const message = useMessage();
   const navigate = useNavigate();
   const http = useHTTP();
-  const transactionvalidator = useValidator({
-    totalPrice: null,
-    "customers.phonenumber": null,
-  });
-
+  const [paginateTransaction, setPaginateTrasaction] = useState(PaginationData);
   const [daftarTransaction, setDaftarTransaction] = useState([]);
+
   const onTransactionList = (page, search, limit = 2) => {
     const url = `${BASE_URL}/transaction/`;
     const params = { page, limit, search };
@@ -147,7 +139,7 @@ export default function TransactionDetail() {
     });
   };
   return (
-    <section className="bg-[#F7EEDD] dark:bg-black-900 h-screen  h-96 bg-cover">
+    <section className="bg-[#F7EEDD] dark:bg-black-900 bg-cover">
       <div className="flex-1 max-w-screen-md px-4 py-2 mx-auto lg:py-16 ">
         <div className="gap-5 py-5 my-5">
           <div className="block mb-5 text-lg font-medium text-gray-900 dark:text-gray-300">

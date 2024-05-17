@@ -1,47 +1,43 @@
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import { FiSearch } from "react-icons/fi";
+import { IoIosCloseCircle } from "react-icons/io";
+import { FaCheck } from "react-icons/fa";
+import { TbReload } from "react-icons/tb";
 import { BASE_URL } from "../libs/config/settings";
-import useHTTP from "../libs/hooks/useHTTP";
 import useJWT from "../libs/hooks/useJWT";
 import useMessage from "../libs/hooks/useMessage";
-import { useEffect, useRef, useState } from "react";
-import { PaginationData } from "../data/PaginationsData";
 import { axiosInstance } from "../libs/config/config";
 import { TransactionInit } from "../data/TransactionData";
 import { CustomerInit } from "../data/CustomerData";
 import { ItemInit } from "../data/ItemData";
-import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
 import { AdminInit } from "../data/AdminData";
 import useChangeListener from "../libs/hooks/useChangeListener";
-import { IoIosCloseCircle } from "react-icons/io";
-import { FaCheck } from "react-icons/fa";
-import { TbReload } from "react-icons/tb";
 import useValidator from "../libs/hooks/useValidator";
 import MessageValidator from "./widgets/MessageValidator";
 export default function Transactions() {
   const jwt = useJWT();
+  const message = useMessage();
+  const navigate = useNavigate();
+  const onChangeListener = useChangeListener();
   const [searchTerm, setSearchTerm] = useState("");
   const [searchTermItem, setSearchTermItem] = useState("");
   const [searchItem, setSearchItem] = useState([]);
-  const [items, setItem] = useState(ItemInit);
-  const [customers, setCustomer] = useState(CustomerInit);
-  const [admin, setAdmin] = useState(AdminInit);
-  const [transaction, setTransaction] = useState(TransactionInit);
   const [onName, setOnName] = useState("");
   const [onPhone, setOnPhone] = useState("");
-  const [onNameItem, setNameItem] = useState("");;
+  const [onNameItem, setNameItem] = useState("");
   const [onService, setOnService] = useState("");
   const [onPrice, setOnPrice] = useState("");
   const [daftarCustomer, setDaftarCustomer] = useState([]);
   const [daftarItem, setDaftarItem] = useState([]);
-  const [daftarTransaction, setDaftarTransaction] = useState([]);
   const [searchCustomer, setSearchCustomer] = useState([]);
-  const [paginateTransaction, setPaginateTrasaction] = useState(PaginationData);
+  const [items, setItem] = useState(ItemInit);
+  const [customers, setCustomer] = useState(CustomerInit);
+  const [admin, setAdmin] = useState(AdminInit);
+  const [transaction, setTransaction] = useState(TransactionInit);
   const [customerAdd, setCustomerAdd] = useState(CustomerInit);
-  const onChangeListener = useChangeListener();
-  const message = useMessage();
-  const navigate = useNavigate();
-  const http = useHTTP();
+
   const transactionvalidator = useValidator({
     totalPrice: null,
     "customers.phonenumber": null,
@@ -98,46 +94,7 @@ export default function Transactions() {
         message.error(error);
       });
   };
-  // const onTransactionList = (page, search, limit = 2) => {
-  //   const params = { page, limit, search };
-  //   axiosInstance
-  //      .get("/transaction/", {
-  //        headers: {
-  //          Authorization: jwt.get(),
-  //          params,
-  //        },
-  //      })
-  //      .then((res) => {
-  //        const { ...paginate } = res.data;
-  //        setDaftarTransaction(res.data.results);
-  //        setCount(res.data.results.length);
-  //        setPaginateTrasaction(paginate);
-  //      })
-  //      .catch((error) => {
-  //        console.log(`apa error catch ? ${error}`);
-  //      });
-  // };
-  const onTransactionList = (page, search, limit = 2) => {
-    const url = `${BASE_URL}/transaction/`;
-    const params = { page, limit, search };
-    const config = {
-      headers: {
-        Authorization: jwt.get(),
-      },
-      params,
-    };
 
-    http.publicHTTP
-      .get(url, config)
-      .then((response) => {
-        const { results, ...paginate } = response.data;
-        setDaftarTransaction(results);
-        setPaginateTrasaction(paginate);
-      })
-      .catch((error) => {
-        message.error(error);
-      });
-  };
   const onCreateTransaction = async () => {
     const url = `${BASE_URL}/transaction`;
     const config = {
@@ -157,7 +114,7 @@ export default function Transactions() {
       .post(url, payload, config)
       .then((response) => {
         message.success(response);
-        navigate(0);
+        navigate("/transaction/detail");
         Swal.fire({
           position: "center",
           icon: "success",
@@ -254,7 +211,6 @@ export default function Transactions() {
   useEffect(() => {
     onCustomerList();
     onItemList();
-    onTransactionList();
     setAdmin({
       username: JSON.parse(jwt.getAdmin()).username,
       email: JSON.parse(jwt.getAdmin()).email,
